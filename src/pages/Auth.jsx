@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { data } from "autoprefixer";
 
@@ -23,15 +23,15 @@ const Auth = () => {
           console.log(data);
         })
         .catch((error) => toast.error(error.code));
-      return;
+    } else {
+      //* login
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((data) => {
+          navigate("/home");
+          console.log(data);
+        })
+        .catch((error) => toast.error(error.code));
     }
-    //* login
-    signInWithEmailAndPassword(auth, values.email, values.password)
-      .then((data) => {
-        navigate("/home");
-        console.log(data);
-      })
-      .catch((error) => toast.error(error.code));
   };
 
   const formik = useFormik({
@@ -55,7 +55,7 @@ const Auth = () => {
             />
           </div>
           <h1 className="font-semibold text-3xl">Sign in to Twitter</h1>
-          <div className="w-80 flex flex-col gap-4 border-b-2 border-zinc-400  pb-6">
+          <div className="w-80 flex flex-col gap-4 border-b-2 border-zinc-400  pb-6 relative">
             <Button
               imgUrl={".//src/assets/google.png"}
               text={"Sign in with Google"}
@@ -64,6 +64,9 @@ const Auth = () => {
               imgUrl={".//src/assets/apple.png"}
               text={"Sign in with Apple"}
             />
+            <p className=" text-center absolute bottom-[-10%] right-2/4 bg-zinc-50 px-3">
+              or
+            </p>
           </div>
           <div className="w-80 flex flex-col gap-4">
             <input
@@ -88,18 +91,45 @@ const Auth = () => {
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-            {!signUp ? (
-              <Button
+            {signUp ? (
+              <div className="flex flex-col justify-center items-center gap-3">
+                <Button
+                  buttonStyle={{
+                    backgroundColor: "black",
+                    color: "white",
+                  }}
+                  text={"Login"}
+                  buttonType={"submit"}
+                />
+                <p>Do you not already have an account?</p>
+                <Button text={"Create new Acount"} buttonType={"submit"} />
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center gap-3">
+                <Button text={"Create new Acount"} buttonType={"submit"} />
+                <p>Do you already have an account?</p>
+                <Button
+                  buttonStyle={{
+                    backgroundColor: "black",
+                    color: "white",
+                  }}
+                  text={"Login"}
+                  buttonType={"submit"}
+                />
+              </div>
+            )}
+
+            {/* <div className="flex flex-col justify-center items-center gap-3">
+                <p>Do you already have an account?</p>
+                <Button
                 buttonStyle={{
                   backgroundColor: "black",
                   color: "white",
                 }}
-                text={"Send"}
+                text={"Login"}
                 buttonType={"submit"}
-              />
-            ) : (
-              <Button text={"Create new Acount"} buttonType={"submit"} />
-            )}
+              /> 
+              </div> */}
           </div>
         </form>
       </div>
