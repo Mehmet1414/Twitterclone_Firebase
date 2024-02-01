@@ -1,5 +1,6 @@
 //* import edilmesi gerekenler
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+
+import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -23,3 +24,4 @@ export const auth = getAuth(app);
 
 //*google giris kurulumu
 export const googleProvider = new GoogleAuthProvider();
+export const appleProvider = new OAuthProvider("apple.com");

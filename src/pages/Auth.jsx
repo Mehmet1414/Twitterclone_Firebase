@@ -3,8 +3,14 @@ import Button from "../components/Button";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
 } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
+import {
+  auth,
+  googleProvider,
+  appleProvider,
+} from "../firebase/firebaseConfig";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -13,6 +19,7 @@ import { data } from "autoprefixer";
 const Auth = () => {
   const [signUp, setSignUp] = useState(false);
   const navigate = useNavigate();
+  //* Form Gönder
   const onSubmit = (values) => {
     console.log(values);
     //* create Acount
@@ -33,7 +40,7 @@ const Auth = () => {
         .catch((error) => toast.error(error.code));
     }
   };
-
+  //* Form Yönetimi
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -41,6 +48,27 @@ const Auth = () => {
     },
     onSubmit,
   });
+  //* Google ile giris
+  const googleLogin = () => {
+    signInWithPopup(auth, googleProvider)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        toast.error(error.code);
+      });
+  };
+  //* Apple ile giris
+  const appleLogin = () => {
+    signInWithRedirect(auth, appleProvider)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        toast.error(error.code);
+      });
+  };
+
   return (
     <>
       <div className="bg-zinc-400 h-screen flex justify-center items-center">
@@ -59,10 +87,14 @@ const Auth = () => {
             <Button
               imgUrl={".//src/assets/google.png"}
               text={"Sign in with Google"}
+              buttonClick={googleLogin}
+              buttonType={"submit"}
             />
             <Button
               imgUrl={".//src/assets/apple.png"}
               text={"Sign in with Apple"}
+              buttonClick={appleLogin}
+              buttonType={"submit"}
             />
             <p className=" text-center absolute bottom-[-10%] right-2/4 bg-zinc-50 px-3">
               or
@@ -91,45 +123,23 @@ const Auth = () => {
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-            {signUp ? (
-              <div className="flex flex-col justify-center items-center gap-3">
-                <Button
-                  buttonStyle={{
-                    backgroundColor: "black",
-                    color: "white",
-                  }}
-                  text={"Login"}
-                  buttonType={"submit"}
-                />
-                <p>Do you not already have an account?</p>
-                <Button text={"Create new Acount"} buttonType={"submit"} />
-              </div>
-            ) : (
-              <div className="flex flex-col justify-center items-center gap-3">
-                <Button text={"Create new Acount"} buttonType={"submit"} />
-                <p>Do you already have an account?</p>
-                <Button
-                  buttonStyle={{
-                    backgroundColor: "black",
-                    color: "white",
-                  }}
-                  text={"Login"}
-                  buttonType={"submit"}
-                />
-              </div>
-            )}
 
-            {/* <div className="flex flex-col justify-center items-center gap-3">
-                <p>Do you already have an account?</p>
-                <Button
+            <div className="flex flex-col justify-center items-center gap-3">
+              <Button
                 buttonStyle={{
                   backgroundColor: "black",
                   color: "white",
                 }}
                 text={"Login"}
                 buttonType={"submit"}
-              /> 
-              </div> */}
+              />
+              <p>Do you not already have an account?</p>
+              <Button
+                text={"Create new Acount"}
+                buttonType={"submit"}
+                buttonClick={() => setSignUp(true)}
+              />
+            </div>
           </div>
         </form>
       </div>

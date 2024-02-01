@@ -14,7 +14,7 @@ function App() {
         console.log(user);
       } else {
         navigate("/");
-        console.log("kullanic yok");
+        console.log("kullanici yok");
       }
     });
   }, []);
