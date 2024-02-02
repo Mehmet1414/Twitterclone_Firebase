@@ -21,8 +21,8 @@ const Feed = () => {
           </head>
           <TweetForm />
         </main>
-        <section className="border bg-slate-100 max-sm:hidden md:min-w-max lg:flex-auto">
-          right sidebar
+        <section className="border bg-slate-100 max-md:hidden md:min-w-max">
+          right sidebaright sidebarright
         </section>
       </div>
     </>

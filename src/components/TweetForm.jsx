@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
+import Button_nav from "./Button_nav";
 
 const TweetForm = () => {
   const inputRef = useRef();
@@ -31,22 +32,33 @@ const TweetForm = () => {
             </button>
           </div>
           <nav className="flex justify-between px-2 py-3 text-sky-500">
-            <div className="flex gap-5 ">
-              <button>
-                <i class="fa-regular fa-image"></i>
-              </button>
-              <button>
-                <i class="fa-solid fa-clapperboard"></i>
-              </button>
-              <button>
-                <i class="fa-solid fa-list-check"></i>
-              </button>
-              <button>
-                <i class="fa-regular fa-face-smile"></i>
-              </button>
-              <button>
-                <i class="fa-regular fa-calendar-days"></i>
-              </button>
+            <div className="flex text-sm ">
+              <Button_nav
+                text={"Media"}
+                i_class={"fa-regular fa-image text-base"}
+                b_class={"hover:bg-sky-100"}
+              />
+              <Button_nav
+                text={"GIF"}
+                i_class={"fa-solid fa-clapperboard text-base"}
+                b_class={"hover:bg-sky-100"}
+              />
+
+              <Button_nav
+                text={"Poll"}
+                i_class={"fa-solid fa-list-check text-base"}
+                b_class={"hover:bg-sky-100"}
+              />
+              <Button_nav
+                text={"Emoji"}
+                i_class={"fa-regular fa-face-smile text-base"}
+                b_class={"hover:bg-sky-100"}
+              />
+              <Button_nav
+                text={"Schedule"}
+                i_class={"fa-regular fa-calendar-days text-base"}
+                b_class={"hover:bg-sky-100"}
+              />
             </div>
             <div>
               <button
@@ -54,7 +66,7 @@ const TweetForm = () => {
                 disabled={inputValue.length === 0}
               >
                 <i class="fa-regular fa-paper-plane"></i>
-                Post
+                Send
               </button>
             </div>
           </nav>
