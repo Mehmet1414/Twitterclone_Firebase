@@ -1,19 +1,18 @@
-import { signOut } from "firebase/auth";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
-import Button from "./Button";
+import React, { useState } from "react";
 import Button_nav from "./Button_nav";
+import LogoutModal from "./Logout_modal";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const logoutUser = () => {
-    signOut(auth);
-    navigate("/");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
   return (
     <>
-      <section className="border flex flex-col items-center gap-2 bg-slate-100 px-5 pt-8">
+      <section className="border relative flex flex-col items-center gap-2 bg-slate-100 px-5 pt-8">
         <Button_nav
           b_class={"h-12 w-12"}
           text={"Home"}
@@ -76,15 +75,10 @@ const NavBar = () => {
             "top-[-50%]  transform -translate-y-1/2 transition-all duration-1000 bg-gray-500 text-slate-50 p-1 rounded mt-1"
           }
           b_class={"mt-20 h-12 w-12"}
-        />
-
-        {/* TODO Logout butonu profile icine gizle */}
-        <Button
-          buttonClick={logoutUser}
-          text={"Logout"}
-          buttonStyle={{ backgroundColor: "black", color: "white" }}
+          handleButtonClick={openModal}
         />
       </section>
+      <LogoutModal isModalOpen={isModalOpen} closeModal={closeModal} />
     </>
   );
 };
