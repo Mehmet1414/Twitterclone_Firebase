@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,7 +12,7 @@ import {
   appleProvider,
 } from "../firebase/firebaseConfig";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { data } from "autoprefixer";
 

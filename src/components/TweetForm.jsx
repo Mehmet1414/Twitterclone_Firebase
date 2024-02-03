@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
-import Button_nav from "./Button_nav";
-
+import Button_nav from "./Buttons/Button_nav";
+import Profile_Png from "../assets/user.png";
 const TweetForm = () => {
   const inputRef = useRef();
   const [inputValue, setInputValue] = useState("");
@@ -12,12 +11,21 @@ const TweetForm = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-  console.log(inputValue);
+
   return (
     <>
       <section className="w-full border-b flex mt-3">
-        <img className="w-12 h-8" src="..//src/assets/user.png" />
-        <div className="flex-1 px-6">
+        <div className="pl-3 ">
+          <img
+            className="w-12 rounded-full"
+            src={
+              auth.currentUser.photoURL
+                ? auth.currentUser.photoURL
+                : Profile_Png
+            }
+          />
+        </div>
+        <div className="flex-1 px-4 ">
           <input
             className="px-2 py-2 bg-transparent text-lg outline-none"
             type="text"

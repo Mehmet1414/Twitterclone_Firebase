@@ -1,4 +1,5 @@
 import NavBar from "../components/NavBar";
+import Post from "../components/Post";
 import TweetForm from "../components/TweetForm";
 
 const Feed = () => {
@@ -20,6 +21,7 @@ const Feed = () => {
             </span>
           </head>
           <TweetForm />
+          <Post />
         </main>
         <section className="border bg-slate-100 max-md:hidden md:min-w-max">
           right sidebaright sidebarright

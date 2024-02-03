@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button_nav from "./Button_nav";
+import Button_nav from "./Buttons/Button_nav";
 import LogoutModal from "./Logout_modal";
 
 const NavBar = () => {
