@@ -11,7 +11,6 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/home");
-        console.log(user);
       } else {
         navigate("/");
         console.log("kullanici yok");

@@ -1,6 +1,7 @@
 //* import edilmesi gerekenler
 
 import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -21,7 +22,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //* Yetkilendirme kurulumu
 export const auth = getAuth(app);
-
+// veritabani (firestore) kurulumu
+export const db = getFirestore(app);
 //*google giris kurulumu
 export const googleProvider = new GoogleAuthProvider();
 export const appleProvider = new OAuthProvider("apple.com");

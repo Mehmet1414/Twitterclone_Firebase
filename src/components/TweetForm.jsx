@@ -1,25 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
-import { auth } from "../firebase/firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 import Button_post from "./Buttons/Button_post";
 import Profile_Png from "../assets/user.png";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
 const TweetForm = () => {
+  //*firebase veritabanindan referans al
+  const tweetCollection = collection(db, "tweets");
+
   const inputRef = useRef();
   const [inputValue, setInputValue] = useState("");
+  //* input focus kontrol
   useEffect(() => {
     inputRef.current.focus();
   }, []);
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //* Mesaji Formdan al
+    const buttonId = e.nativeEvent.submitter.id;
+    let content;
+    {
+      buttonId === "sendButton" ? (content = e.target[0].value) : "";
+    }
+    //* tweet'i collection'a ekle
+    await addDoc(tweetCollection, {
+      content,
+      imgContent: null,
+      createDate: serverTimestamp(),
+      user: {
+        name: auth?.currentUser?.displayName,
+        profilePic: auth?.currentUser?.photoURL
+          ? auth?.currentUser?.photoURL
+          : Profile_Png,
+      },
+      likes: [],
+    });
+  };
 
   return (
     <>
-      <section className="w-full border-b flex mt-3">
+      <form onSubmit={handleSubmit} className="w-full border-b flex mt-3">
         <div className="pl-3 ">
           <img
             className="w-12 rounded-full"
             src={
-              auth?.currentUser.photoURL
+              auth?.currentUser?.photoURL
                 ? auth.currentUser.photoURL
                 : Profile_Png
             }
@@ -72,14 +100,15 @@ const TweetForm = () => {
               <button
                 className="flex items-center px-2 rounded-full text-slate-50 gap-2 bg-sky-500 font-semibold py-2 hover:bg-sky-600 transition"
                 disabled={inputValue.length === 0}
+                id="sendButton"
               >
-                <i class="fa-regular fa-paper-plane"></i>
+                <i className="fa-regular fa-paper-plane"></i>
                 Send
               </button>
             </div>
           </nav>
         </div>
-      </section>
+      </form>
     </>
   );
 };

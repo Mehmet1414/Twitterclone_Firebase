@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
 import Button_nav from "./Buttons/Button_nav";
 import LogoutModal from "./Logout_modal";
 
@@ -25,16 +26,15 @@ const NavBar = () => {
         <Button_nav text={"More"} i_class={"fa-solid fa-ellipsis"} />
         <Button_nav
           text={"Post"}
-          i_class={
-            "fa-solid fa-feather-pointed text-slate-50 lg:border lg:rounded-full lg:p-2"
-          }
+          i_class={"fa-solid fa-feather-pointed text-slate-50 "}
           b_class={
             "bg-sky-500 hover:bg-sky-600 h-14 w-14 text-slate-50 font-semibold "
           }
         />
         <Button_nav
           text={"Accounts"}
-          i_class={"fa-regular fa-user"}
+          img_class={"rounded-full lg:w-12"}
+          imgUrl={auth?.currentUser?.photoURL}
           s_class={
             "top-[-50%]  transform -translate-y-1/2 transition-all duration-1000 bg-gray-500 text-slate-50 p-1 rounded mt-1"
           }

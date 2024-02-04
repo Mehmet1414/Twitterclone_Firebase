@@ -34,7 +34,7 @@ const LogoutModal = ({ isModalOpen, closeModal }) => {
               className="w-full font-semibold py-2 hover:bg-slate-100 transition"
               onClick={logoutUser}
             >
-              Log out {"Mehmet1414"}
+              Logout ({auth.currentUser.email})
             </button>
           </div>
         </div>
