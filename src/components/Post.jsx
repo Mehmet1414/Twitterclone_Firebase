@@ -1,5 +1,3 @@
-import React from "react";
-import Button_nav from "./Buttons/Button_nav";
 import Button_post from "./Buttons/Button_post";
 
 const Post = () => {
@@ -19,13 +17,7 @@ const Post = () => {
               <span className=" text-gray-500">.</span>
               <span className=" text-gray-500">3m</span>
             </div>
-            <Button_nav
-              b_class={
-                "h-8 w-8 text-base text-gray-500 hover:bg-sky-100 hover:text-sky-400"
-              }
-              text={"More"}
-              i_class={"fa-solid fa-ellipsis"}
-            />
+            <Button_post text={"More"} i_class={"fa-solid fa-ellipsis"} />
           </div>
           <div>
             Message: Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -42,15 +34,15 @@ const Post = () => {
               text={"Repost"}
               i_class={"fa-solid fa-retweet text-base"}
               count={586}
-              b_class={"hover:text-green-400 hover:bg-green-100"}
-              c_class={"group-hover:text-green-400"}
+              b_class={"hover:text-green-500 hover:bg-green-100"}
+              c_class={"group-hover:text-green-500"}
             />
             <Button_post
               text={"Like"}
               i_class={"fa-regular fa-heart"}
               count={"2.5k"}
-              b_class={"hover:text-red-400 hover:bg-red-100"}
-              c_class={"group-hover:text-red-400"}
+              b_class={"hover:text-red-500  hover:bg-red-100"}
+              c_class={"group-hover:text-red-500"}
             />
             <Button_post
               text={"View"}
@@ -58,18 +50,12 @@ const Post = () => {
               count={"1.5K"}
             />
 
-            <div>
-              <Button_nav
-                b_class={
-                  "h-8 w-8 text-base text-gray-500 hover:bg-sky-100 hover:text-sky-400"
-                }
+            <div className="flex">
+              <Button_post
                 text={"Bookmark"}
                 i_class={"fa-regular fa-bookmark"}
               />
-              <Button_nav
-                b_class={
-                  "h-8 w-8 text-base text-gray-500 hover:bg-sky-100 hover:text-sky-400"
-                }
+              <Button_post
                 text={"Share"}
                 i_class={"fa-solid fa-arrow-up-from-bracket"}
               />
