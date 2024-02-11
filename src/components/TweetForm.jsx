@@ -3,6 +3,7 @@ import { auth, db } from "../firebase/firebaseConfig";
 import Button_post from "./Buttons/Button_post";
 import Profile_Png from "../assets/user.png";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const TweetForm = () => {
   //*firebase veritabanindan referans al
@@ -23,7 +24,7 @@ const TweetForm = () => {
     const buttonId = e.nativeEvent.submitter.id;
     let content;
     {
-      buttonId === "sendButton" ? (content = e.target[0].value) : "";
+      (buttonId === "sendButton") & (content = e.target[0].value);
     }
     //* tweet'i collection'a ekle
     await addDoc(tweetCollection, {
@@ -38,6 +39,7 @@ const TweetForm = () => {
       },
       likes: [],
     });
+    e.target[0].value = "";
   };
 
   return (
@@ -55,7 +57,7 @@ const TweetForm = () => {
         </div>
         <div className="flex-1 px-4 ">
           <input
-            className="px-2 py-2 bg-transparent text-lg outline-none"
+            className="w-full px-2 py-2 bg-transparent text-lg outline-none"
             type="text"
             placeholder="What is happening?"
             ref={inputRef}
@@ -98,8 +100,8 @@ const TweetForm = () => {
             </div>
             <div>
               <button
-                className="flex items-center px-2 rounded-full text-slate-50 gap-2 bg-sky-500 font-semibold py-2 hover:bg-sky-600 transition"
-                disabled={inputValue.length === 0}
+                className="flex items-center px-2 rounded-full text-slate-50 gap-2 bg-sky-500 font-semibold py-2 hover:bg-sky-600 transition disabled:cursor-default disabled:bg-sky-500"
+                disabled={!inputValue.trim()}
                 id="sendButton"
               >
                 <i className="fa-regular fa-paper-plane"></i>

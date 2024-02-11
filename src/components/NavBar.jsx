@@ -13,7 +13,7 @@ const NavBar = () => {
   };
   return (
     <>
-      <section className="border max-lg:relative flex flex-col items-center gap-2 bg-slate-100 px-5 pt-8">
+      <section className="border h-screen max-lg:relative flex flex-col items-center gap-2 bg-slate-100 md:px-5 pt-8">
         <Button_nav text={"Home"} i_class={"fa-solid fa-house"} />
         <Button_nav text={"Home"} i_class={"fa-solid fa-magnifying-glass"} />
         <Button_nav text={"Notifications"} i_class={"fa-regular fa-bell"} />

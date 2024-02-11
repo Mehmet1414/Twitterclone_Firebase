@@ -6,4 +6,5 @@
 - tailwind
 - formik
 - yup
+-moment
 # Twitterclone_Firebase

@@ -14,7 +14,6 @@ import {
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { data } from "autoprefixer";
 
 const Auth = () => {
   const [signUp, setSignUp] = useState(false);
@@ -35,7 +34,6 @@ const Auth = () => {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((data) => {
           navigate("/home");
-          console.log(data);
         })
         .catch((error) => toast.error(error.code));
     }
