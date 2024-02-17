@@ -13,7 +13,7 @@ const Button_post = ({
     <>
       <button
         onClick={buttonClick}
-        className={` group flex justify-center items-center hover:bg-sky-100 h-8 w-8  text-base text-gray-500 hover:text-sky-400 rounded-full text-center transition relative ${b_class} `}
+        className={`relative group flex justify-center items-center hover:bg-sky-100 h-8 w-8  text-base text-gray-500 hover:text-sky-400 rounded-full text-center transition ${b_class} `}
       >
         <i className={` ${i_class}`}></i>
         <span

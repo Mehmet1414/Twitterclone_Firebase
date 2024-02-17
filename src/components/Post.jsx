@@ -32,10 +32,12 @@ const Post = ({ tweet }) => {
           <div>{tweet.content}</div>
           <div
             className={`${
-              tweet.imgContent ? "h-full" : "hidden"
-            } w-full border  rounded-xl my-3`}
+              tweet.imgContent ? "flex" : "hidden"
+            } w-full shadow  rounded-xl my-3`}
           >
-            {tweet.imgContent}
+            {tweet.imgContent && (
+              <img className=" rounded-xl" src={tweet.imgContent} />
+            )}
           </div>
           <div className="flex justify-between ">
             <Button_post

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { auth, db } from "../firebase/firebaseConfig";
+import { auth, db, storage } from "../firebase/firebaseConfig";
 import Button_post from "./Buttons/Button_post";
 import Profile_Png from "../assets/user.png";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { toast } from "react-toastify";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const TweetForm = () => {
   //*firebase veritabanindan referans al
@@ -18,28 +18,51 @@ const TweetForm = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+
+  const uploadImage = async (image) => {
+    if (image == null) return null;
+    // storage dosya icin yer ayarlama
+    const storageRef = ref(storage, `${new Date().getTime() + image.name}`); // image.name önüne benzersiz id ekledik - böylelikle ayni resim tekrar yüklenebilecek
+
+    // dosyayi storage yüklme
+    const imageUrl = await uploadBytes(storageRef, image)
+      // yükleme bitince url yi alma
+      .then((snapshot) => getDownloadURL(snapshot.ref));
+
+    // fonksiyonun cagrildigi yere veri gönderme
+    return imageUrl;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //console.dir(e.target[3].files[0]);
+    const image = e.target[3].files[0];
+
+    // resim varsa storage yükle ve url al
+    const imageUrl = await uploadImage(image);
     //* Mesaji Formdan al
     const buttonId = e.nativeEvent.submitter.id;
-    let content;
-    {
-      (buttonId === "sendButton") & (content = e.target[0].value);
+
+    if (buttonId === "sendButton") {
+      const content = inputValue?.trim();
+      if (content) {
+        //* tweet'i collection'a(firebase) ekle
+        await addDoc(tweetCollection, {
+          content,
+          imgContent: imageUrl,
+          createDate: serverTimestamp(),
+          user: {
+            name: auth?.currentUser?.displayName,
+            profilePic: auth?.currentUser?.photoURL
+              ? auth?.currentUser?.photoURL
+              : Profile_Png,
+          },
+          likes: [],
+        });
+        setInputValue("");
+        e.target[0].value = "";
+      }
     }
-    //* tweet'i collection'a ekle
-    await addDoc(tweetCollection, {
-      content,
-      imgContent: null,
-      createDate: serverTimestamp(),
-      user: {
-        name: auth?.currentUser?.displayName,
-        profilePic: auth?.currentUser?.photoURL
-          ? auth?.currentUser?.photoURL
-          : Profile_Png,
-      },
-      likes: [],
-    });
-    e.target[0].value = "";
   };
 
   return (
@@ -71,11 +94,19 @@ const TweetForm = () => {
           </div>
           <nav className="flex justify-between px-2 py-3 text-sky-500">
             <div className="flex text-sm ">
-              <Button_post
-                text={"Media"}
-                i_class={"fa-regular fa-image text-base"}
-                b_class={"text-sky-400"}
-              />
+              <div className="relative group cursor-pointer rounded-full">
+                <Button_post
+                  text={"Media"}
+                  i_class={"fa-regular fa-image text-base"}
+                  b_class={"text-sky-400"}
+                />
+                <input
+                  className="absolute group-hover:block  w-full h-full top-0 left-0 opacity-0 rounded-full"
+                  type="file"
+                  name=""
+                  id="sendButton"
+                />
+              </div>
               <Button_post
                 text={"GIF"}
                 i_class={"fa-solid fa-clapperboard text-base"}

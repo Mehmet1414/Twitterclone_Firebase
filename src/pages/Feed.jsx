@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Post from "../components/Post";
@@ -12,8 +12,10 @@ const Feed = () => {
 
   //* EKrana ilk basildiginda veriyi cek
   useEffect(() => {
+    //* tweet filtreleme (tarihe göre)
+    const quereyTweet = query(tweetCol, orderBy("createDate", "desc"));
     // Veri her ddegistigindde state i günceller
-    onSnapshot(tweetCol, (snapshot) => {
+    onSnapshot(quereyTweet, (snapshot) => {
       const liveTweets = [];
       snapshot.forEach((doc) => {
         liveTweets.push({ ...doc.data(), id: doc.id });
@@ -23,7 +25,7 @@ const Feed = () => {
       setTweets(liveTweets);
     });
   }, []);
-  console.log(tweets);
+  //console.log(tweets);
   return (
     <>
       <div className="flex h-screen">
@@ -42,8 +44,8 @@ const Feed = () => {
             </span>
           </div>
           <TweetForm />
-          {tweets?.map((tweet) => (
-            <Post tweet={tweet} />
+          {tweets?.map((tweet, index) => (
+            <Post key={index} tweet={tweet} />
           ))}
         </main>
         <section className="border h-screen bg-slate-100 max-md:hidden md:min-w-max">
