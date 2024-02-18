@@ -6,5 +6,6 @@
 - tailwind
 - formik
 - yup
--moment
+- moment
+- uuid
 # Twitterclone_Firebase

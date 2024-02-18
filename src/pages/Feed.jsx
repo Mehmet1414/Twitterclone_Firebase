@@ -45,7 +45,7 @@ const Feed = () => {
           </div>
           <TweetForm />
           {tweets?.map((tweet, index) => (
-            <Post key={index} tweet={tweet} />
+            <Post key={index + 1} tweet={tweet} />
           ))}
         </main>
         <section className="border h-screen bg-slate-100 max-md:hidden md:min-w-max">

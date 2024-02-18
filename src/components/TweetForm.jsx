@@ -4,6 +4,7 @@ import Button_post from "./Buttons/Button_post";
 import Profile_Png from "../assets/user.png";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 const TweetForm = () => {
   //*firebase veritabanindan referans al
@@ -43,6 +44,8 @@ const TweetForm = () => {
     //* Mesaji Formdan al
     const buttonId = e.nativeEvent.submitter.id;
 
+    const newId = uuidv4();
+
     if (buttonId === "sendButton") {
       const content = inputValue?.trim();
       if (content) {
@@ -58,6 +61,7 @@ const TweetForm = () => {
               : Profile_Png,
           },
           likes: [],
+          id: newId,
         });
         setInputValue("");
         e.target[0].value = "";

@@ -25,7 +25,7 @@ const LogoutModal = ({ isModalOpen, closeModal }) => {
         <div className="fixed inset-0 z-50 bg-slate-50/5">
           <div className=" absolute flex flex-col justify-center items-end gap-2 bottom-20 left-12 bg-white z-50 w-80 h-40 rounded-xl shadow-2xl">
             <button className="absolute px-4 top-0 left-0" onClick={closeModal}>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
             <button className="w-full font-semibold py-2 hover:bg-slate-100 transition">
               Add an existing account

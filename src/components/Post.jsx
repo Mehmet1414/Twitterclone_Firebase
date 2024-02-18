@@ -1,9 +1,32 @@
 import Button_post from "./Buttons/Button_post";
 import Profile_Png from "../assets/user.png";
 import moment from "moment";
-
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebaseConfig";
+import { useEffect, useState } from "react";
 const Post = ({ tweet }) => {
+  const [isLike, setIsLike] = useState(false);
   const tweetDate = new Date(tweet?.createDate?.toDate());
+  const handleLike = async (tweet) => {
+    // güncellencek tweet'in referansini alma
+    const tweetRef = doc(db, "tweets", tweet.id);
+    await updateDoc(tweetRef, {
+      likes: isLike
+        ? arrayRemove(auth?.currentUser?.email)
+        : arrayUnion(auth?.currentUser?.email),
+    });
+    //console.log(tweet.id);
+  };
+  useEffect(() => {
+    const foundUser = tweet?.likes?.find(
+      (user) => user === auth?.currentUser?.email
+    );
+    if (foundUser) {
+      setIsLike(true);
+    } else {
+      setIsLike(false);
+    }
+  }, [tweet]);
   return (
     <>
       <div className="flex w-full p-3 border-b">
@@ -20,7 +43,7 @@ const Post = ({ tweet }) => {
                 {tweet.user.name}
               </button>
               <button className=" text-gray-500 transition">
-                @{tweet?.user.name.toLowerCase()}
+                @{tweet?.user?.name?.toLowerCase()}
               </button>
               <span className=" text-gray-500">.</span>
               <span className=" text-gray-500">
@@ -54,10 +77,15 @@ const Post = ({ tweet }) => {
             />
             <Button_post
               text={"Like"}
-              i_class={"fa-regular fa-heart"}
+              i_class={
+                isLike
+                  ? "fa-solid fa-heart text-red-500"
+                  : "fa-regular fa-heart "
+              }
               count={tweet.likes.length}
-              b_class={"hover:text-red-500  hover:bg-red-100"}
+              b_class={"group-hover:text-red-600  hover:bg-red-100"}
               c_class={"group-hover:text-red-500"}
+              buttonClick={() => handleLike(tweet)}
             />
             <Button_post
               text={"View"}

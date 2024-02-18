@@ -15,7 +15,7 @@ const Button_post = ({
         onClick={buttonClick}
         className={`relative group flex justify-center items-center hover:bg-sky-100 h-8 w-8  text-base text-gray-500 hover:text-sky-400 rounded-full text-center transition ${b_class} `}
       >
-        <i className={` ${i_class}`}></i>
+        <i className={` ${i_class} `}></i>
         <span
           className={`group-hover:block text-xs hidden absolute top-full left-1/2 transform -translate-x-1/2 transition-all duration-1000 bg-gray-500 text-slate-50 p-1 rounded mt-1 z-10 ${s_class}`}
         >

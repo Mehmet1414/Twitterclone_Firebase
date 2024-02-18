@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase/firebaseConfig";
 import Button_nav from "./Buttons/Button_nav";
 import LogoutModal from "./Logout_modal";
-
+import Profile_Png from "../assets/user.png";
 const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
@@ -34,7 +34,11 @@ const NavBar = () => {
         <Button_nav
           text={"Accounts"}
           img_class={"rounded-full lg:w-12"}
-          imgUrl={auth?.currentUser?.photoURL}
+          imgUrl={
+            auth?.currentUser?.photoURL
+              ? auth?.currentUser?.photoURL
+              : Profile_Png
+          }
           s_class={
             "top-[-50%]  transform -translate-y-1/2 transition-all duration-1000 bg-gray-500 text-slate-50 p-1 rounded mt-1"
           }
